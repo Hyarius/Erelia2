@@ -27,8 +27,6 @@ private:
 			tmp.header.sparedSpace[3] = 0;
 
 			_client->send(tmp);
-
-			jgl::cout << " -------- " << std::endl;
 		}
 		return (false);
 	}
@@ -48,7 +46,6 @@ public:
 	{
 		_client = new Client();
 		_client->setUnknowMessageActivityFunction([&](Message& p_msg) {
-			jgl::cout << "Received message !" << std::endl;
 
 			std::string message = p_msg.pull<std::string>();
 

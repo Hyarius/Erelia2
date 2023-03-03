@@ -17,12 +17,9 @@ public:
 	{
 		_server = new Server(WORLD_PORT);
 		_server->setUnknowMessageActivityFunction([&](Connection* p_connection, Message& p_msg) {
-				jgl::cout << "Received message !" << std::endl;
-				Message awnser(ServerMessage::WorldMessage);
+				Message awnser(ServerMessage::WorldAwnser);
 
-				awnser.header.emiterID = p_msg.header.emiterID;
-				for (jgl::Size_t i = 0; i < MESSAGE_FREE_SPACE; i++)
-					awnser.header.sparedSpace[i] = p_msg.header.sparedSpace[i];
+				awnser.copyHeaderData(p_msg);
 
 				awnser << std::string("Message from worldNode");
 

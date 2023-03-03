@@ -15,9 +15,7 @@ public:
 	{
 		Message awnser = _treatMessage(p_msg);
 
-		awnser.header.emiterID = p_msg.header.emiterID;
-		for (jgl::Size_t i = 0; i < MESSAGE_FREE_SPACE; i++)
-			awnser.header.sparedSpace[i] = p_msg.header.sparedSpace[i];
+		awnser.copyHeaderData(p_msg);
 
 		return (awnser);
 	}
@@ -100,7 +98,6 @@ public:
 		_nodeClient = new Client();
 		_nodeClient->connect(p_address, p_serverPort);
 		_nodeClient->setUnknowMessageActivityFunction([&](Message& p_msg) {
-				jgl::cout << "Adding awnser from node " << std::endl << p_msg << std::endl;
 				_awnserReady.push_back(p_msg);
 			});
 
@@ -111,7 +108,6 @@ public:
 
 	void emitMessage(Message& p_msg)
 	{
-		jgl::cout << "Emiting a message to the node" << std::endl << p_msg << std::endl;
 		_nodeClient->send(p_msg);
 	}
 };
@@ -134,14 +130,11 @@ private:
 				while (tmpAwnserArray.empty() == false)
 				{
 					Message awnser = tmpAwnserArray.pop_front();
-					jgl::cout << "Reading awnser " << std::endl << awnser << std::endl;
 
 					jgl::Long clientID = awnser.header.sparedSpace[CONNECTION_BYTE];
-					jgl::cout << "Sending message back to : " << clientID << std::endl;
+
 					Connection* connection = _inputServer->connection(clientID);
 					connection->send(awnser);
-
-					jgl::cout << " ---- SENDING BACK AWNSER TO CLIENT ---- " << std::endl << std::endl << std::endl;
 				}
 			}
 		}
@@ -154,12 +147,11 @@ public:
 	{
 		_inputServer = new Server(p_serverPort);
 		_inputServer->setUnknowMessageActivityFunction([&](Connection* p_connection, Message& p_msg) {
-				jgl::cout << "Central server received a new message from " << p_connection->id() << std::endl;
+
 				jgl::Size_t nodeId = p_msg.header.sparedSpace[NODE_ID_BYTE];
+
 				p_msg.header.emiterID = p_connection->id();
 				p_msg.header.sparedSpace[CONNECTION_BYTE] = p_connection->id();
-
-				jgl::cout << "Retrieving connection : " << _inputServer->connection(p_connection->id()) << std::endl;
 				
 				_nodeHandler[nodeId]->emitMessage(p_msg);
 			});

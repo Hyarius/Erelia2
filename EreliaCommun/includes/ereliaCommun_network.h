@@ -8,7 +8,8 @@
 
 enum class ServerMessage
 {
-	WorldMessage,
+	WorldMessage = 42,
+	WorldAwnser = 84,
 	AccountMessage
 };
 

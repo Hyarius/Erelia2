@@ -16,12 +16,19 @@ enum class ServerMessage
 #define ACCOUNT_ID 1
 #define WORLD_ID 2
 
-#define NODE_ID_BYTE 0
-#define CONNECTION_BYTE 1
-
 using Connection = jgl::Network::Connection<ServerMessage>;
 using Message = jgl::Network::Message<ServerMessage>;
 using Server = jgl::Network::Server<ServerMessage>;
 using Client = jgl::Network::Client<ServerMessage>;
+
+using Node = jgl::Network::Node<ServerMessage>;
+
+using NodeHandler = jgl::Abstract::Network::NodeHandler<ServerMessage>;
+using SinglethreadNodeHandler = jgl::Network::SinglethreadNodeHandler<ServerMessage>;
+using MultithreadNodeHandler = jgl::Network::MultithreadNodeHandler<ServerMessage>;
+using OnlineNodeHandler = jgl::Network::OnlineNodeHandler<ServerMessage>;
+
+using NodeManager = jgl::Widget::NodeManager<ServerMessage>;
+
 using ServerManager = jgl::Widget::ServerManager<ServerMessage>;
 using ClientManager = jgl::Widget::ClientManager<ServerMessage>;

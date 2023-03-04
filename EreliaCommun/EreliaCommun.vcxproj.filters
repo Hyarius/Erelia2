@@ -21,9 +21,6 @@
     <ClInclude Include="includes\ereliaCommun_network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\ereliaCommun_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ereliaCommun.cpp">

@@ -3,7 +3,7 @@
 class MainApplication : public jgl::Abstract::Widget::NoGraphics 
 {
 private:
-	NodeManager<2>* _nodeManager;
+	NodeManager* _nodeManager;
 
 	jgl::Bool _onUpdate()
 	{
@@ -13,11 +13,11 @@ private:
 public:
 	MainApplication() : jgl::Abstract::Widget::NoGraphics("MainApplication")
 	{
-		_nodeManager = addChildren<NodeManager<2>>(SERVER_PORT);
+		_nodeManager = addChildren<NodeManager>(SERVER_PORT);
 		_nodeManager->activate();
 
-		_nodeManager->setNode(new OnlineNodeHandler("World node", "127.0.0.1", WORLD_PORT), WORLD_ID);
-		_nodeManager->setNode(new OnlineNodeHandler("Account node", "127.0.0.1", ACCOUNT_PORT), ACCOUNT_ID);
+		_nodeManager->setNode(new OnlineNodeHandler(WORLD_ID, "World node", "127.0.0.1", WORLD_PORT));
+		_nodeManager->setNode(new OnlineNodeHandler(ACCOUNT_ID, "Account node", "127.0.0.1", ACCOUNT_PORT));
 	}
 };
 

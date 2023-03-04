@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="includes\ereliaCommun.h" />
     <ClInclude Include="includes\ereliaCommun_network.h" />
-    <ClInclude Include="includes\ereliaCommun_node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ereliaCommun.cpp" />
